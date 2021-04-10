@@ -1,0 +1,23 @@
+{
+  "name": "codersrevelation",
+  "version": "1.0.0",
+  "description": "To rank coders as per their codechef, codeforces and geeksforgeeks profile and save codes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Samiran04/Coders-Revelation.git"
+  },
+  "author": "Samiran Roy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Samiran04/Coders-Revelation/issues"
+  },
+  "homepage": "https://github.com/Samiran04/Coders-Revelation#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
+}
