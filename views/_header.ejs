@@ -1,0 +1,10 @@
+<header>
+    <% if(locals.user){ %>
+        <p><a href="/users/profile"><%= locals.user.name %></a></p>
+        <p><a href="/users/destroy-session">Log Out</a></p>
+    <% } else {%>
+        <p><a href="/users/sign-up">Sign Up</a></p>
+        <p><a href="/users/sign-in">Sign In</a></p>
+    <% } %>
+    <p><a href="/">Home</a></p>
+</header>

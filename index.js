@@ -6,11 +6,18 @@ const db = require('./config/mongoose');
 const passport = require('passport');
 const localStrategy = require('./config/passport_local_strategy');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const expressLayouts = require('express-ejs-layouts');
 
 app.use(express.urlencoded());
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
+app.use(expressLayouts);
+
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
 
 app.use(session({
     name:'CodersRevelations',
@@ -19,7 +26,11 @@ app.use(session({
     resave: false,
     cookie: {
         maxAge: (1000 * 60 * 100)
-    }
+    },
+    store : new MongoDBStore({
+        uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
+        collection: 'mySessions'
+      })
     }
 ));
 

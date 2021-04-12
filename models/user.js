@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
     },
     cgpa: {
         type: Number
+    },
+    codechef: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CodeChef'
     }
 }, {timestamps: true});
 

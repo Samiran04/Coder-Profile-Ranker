@@ -8,6 +8,16 @@ module.exports.signUp = function(req, res){
     return res.render('users_signUp');
 }
 
+module.exports.profile = function(req, res){
+    return res.render('users_profile');
+}
+
+module.exports.destroySession = function(req, res){
+    req.logout();
+
+    return res.redirect('/');
+}
+
 module.exports.create = async function(req, res){
 
     try{
@@ -42,4 +52,16 @@ module.exports.create = async function(req, res){
 
 module.exports.createSession = async function(req, res){
     return res.redirect('/');
+}
+
+module.exports.checkUser = function(req, res, next)
+{
+    if(!req.user)
+    {
+        next();
+    }
+    else
+    {
+        return res.redirect('/');
+    }
 }
