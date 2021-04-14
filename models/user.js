@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
     codechef: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CodeChef'
+    },
+    codeforces: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CodeForces'
     }
 }, {timestamps: true});
 

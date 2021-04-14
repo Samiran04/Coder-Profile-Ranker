@@ -73,7 +73,6 @@ module.exports.removeData = async function(req, res){
             let user = await User.findByIdAndUpdate(req.user._id, {
                 $unset: {codechef: codechef._id}
             });
-            console.log('HERE**********', user);
 
         }
 

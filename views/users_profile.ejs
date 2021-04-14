@@ -16,4 +16,20 @@
             <p><a href="/codechef/remove-data">Remove</a></p>
         <% } %>
     </div>
+
+    <div>
+        <h3>CodeForces</h3>
+        <% if(!locals.codeforces){ %>
+            <form action="/codeforces/enter-data" method="POST">
+                <input type="text" name="Id" placeholder="User Id" required>
+                <input type="number" name="rating" placeholder="eg. 1200" required>
+                <input type="submit" value="Submit">
+            </form>
+        <% } else { %>
+            <p><b>User Id: </b><%= locals.codeforces.Id %></p>
+            <p><b>Raing: </b><%= locals.codeforces.rating %></p>
+            <h3><%= locals.codeforces.title %></h3>
+            <p><a href="/codeforces/remove-data">Remove</a></p>
+        <% } %>
+    </div>
 </div>
