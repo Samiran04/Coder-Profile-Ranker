@@ -1,16 +1,13 @@
 const mongoose = require('mongoose');
 
-const codeForcesSchema = new mongoose.Schema({
+const gfgSchema = new mongoose.Schema({
     Id: {
         type: String,
         required: true
     },
-    rating: {
+    ranking: {
         type: Number,
         required: true
-    },
-    title: {
-        type: String
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -18,6 +15,6 @@ const codeForcesSchema = new mongoose.Schema({
     }
 }, {timestamps: true});
 
-const CodeForces = mongoose.model('CodeForces', codeForcesSchema);
+const Gfg = mongoose.model('Gfg', gfgSchema);
 
-module.exports = CodeForces;
+module.exports = Gfg;

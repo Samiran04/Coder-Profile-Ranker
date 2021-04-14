@@ -11,7 +11,7 @@
             </form>
         <% } else { %>
             <p><b>User Id: </b><%= locals.codechef.Id %></p>
-            <p><b>Raing: </b><%= locals.codechef.rating %></p>
+            <p><b>Rating: </b><%= locals.codechef.rating %></p>
             <h3><%= locals.codechef.title %></h3>
             <p><a href="/codechef/remove-data">Remove</a></p>
         <% } %>
@@ -27,9 +27,24 @@
             </form>
         <% } else { %>
             <p><b>User Id: </b><%= locals.codeforces.Id %></p>
-            <p><b>Raing: </b><%= locals.codeforces.rating %></p>
+            <p><b>Rating: </b><%= locals.codeforces.rating %></p>
             <h3><%= locals.codeforces.title %></h3>
             <p><a href="/codeforces/remove-data">Remove</a></p>
+        <% } %>
+    </div>
+
+    <div>
+        <h3>Geeks For Geeks</h3>
+        <% if(!locals.gfg){ %>
+            <form action="/gfg/enter-data" method="POST">
+                <input type="text" name="Id" placeholder="User Id" required>
+                <input type="number" name="ranking" placeholder="eg. 100" required>
+                <input type="submit" value="Submit">
+            </form>
+        <% } else { %>
+            <p><b>User Id: </b><%= locals.gfg.Id %></p>
+            <p><b>Ranking: <%= locals.gfg.ranking %></b></p>
+            <p><a href="/gfg/remove-data">Remove</a></p>
         <% } %>
     </div>
 </div>

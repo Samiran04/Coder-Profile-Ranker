@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
     codeforces: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CodeForces'
+    },
+    gfg: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Gfg'
     }
 }, {timestamps: true});
 

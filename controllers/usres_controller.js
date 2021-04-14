@@ -10,14 +10,16 @@ module.exports.signUp = function(req, res){
 
 module.exports.profile = async function(req, res){
 
-    let user = await User.findById(req.user._id).populate('codechef').populate('codeforces');
+    let user = await User.findById(req.user._id).populate('codechef').populate('codeforces').populate('gfg');
 
     let codechef = user.codechef;
     let codeforces = user.codeforces;
+    let gfg = user.gfg;
 
     return res.render('users_profile', {
         codechef: codechef,
-        codeforces: codeforces
+        codeforces: codeforces,
+        gfg: gfg
     });
 }
 
