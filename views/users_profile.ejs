@@ -1,1 +1,19 @@
-<h1>Profile</h1>
+<div>
+    <p><%= locals.user.name %></p>
+    <p><%= locals.user.email %></p>
+    <div>
+        <h3>CodeChef</h3>
+        <% if(!locals.codechef){ %>
+            <form action="/codechef/enter-data" method="POST">
+                <input type="text" name="Id" placeholder="User Id" required>
+                <input type="number" name="rating" placeholder="eg. 1200" required>
+                <input type="submit" value="Submit">
+            </form>
+        <% } else { %>
+            <p><b>User Id: </b><%= locals.codechef.Id %></p>
+            <p><b>Raing: </b><%= locals.codechef.rating %></p>
+            <h3><%= locals.codechef.title %></h3>
+            <p><a href="/codechef/remove-data">Remove</a></p>
+        <% } %>
+    </div>
+</div>

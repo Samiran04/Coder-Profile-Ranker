@@ -8,8 +8,15 @@ module.exports.signUp = function(req, res){
     return res.render('users_signUp');
 }
 
-module.exports.profile = function(req, res){
-    return res.render('users_profile');
+module.exports.profile = async function(req, res){
+
+    let user = await User.findById(req.user._id).populate('codechef');
+
+    let codechef = user.codechef;
+
+    return res.render('users_profile', {
+        codechef: codechef
+    });
 }
 
 module.exports.destroySession = function(req, res){
