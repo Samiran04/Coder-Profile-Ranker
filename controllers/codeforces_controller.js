@@ -1,5 +1,8 @@
 const User = require('../models/user');
 const CodeForces = require('../models/codeforces');
+const Rank = require('../models/rank');
+
+const calculator = require('../rankCalculator/rankCalculator');
 
 module.exports.enterData = async function(req, res){
     try{
@@ -7,9 +10,11 @@ module.exports.enterData = async function(req, res){
 
         let temp = await CodeForces.findOne({user: req.user._id});
 
+        let codeforces;
+
         if(!temp)
         {
-            let codeforces = await CodeForces.create({
+                codeforces = await CodeForces.create({
                 Id: req.body.Id,
                 rating: req.body.rating,
                 user: user._id
@@ -61,6 +66,29 @@ module.exports.enterData = async function(req, res){
             user.save();
         }
 
+        let rank;
+
+        if(!user.rank)
+        {
+            rank = await Rank.create({
+                user: user._id,
+                gfg: 0,
+                codeforces: codeforces.rating,
+                codechef: 0
+            });
+
+            user.rank = rank._id;
+            user.save();
+        }else{
+            rank = await Rank.findById(user.rank);
+            rank.codeforces = codeforces.rating ;
+        }
+
+        let total = await calculator.calculateRating(rank);
+
+        rank.rating = total;
+        rank.save();
+
         return res.redirect('back');
     }
     catch(err){
@@ -78,7 +106,17 @@ module.exports.removeData = async function(req, res){
             let user = await User.findByIdAndUpdate(req.user._id, {
                 $unset: {codeforces: codeforces._id}
             });
+            let rank = await Rank.findOne({user: req.user._id});
 
+            rank.codeforces = 0;
+
+            let total = await calculator.calculateRating(rank);
+
+            rank.rating = total;
+
+            console.log(rank);
+
+            rank.save();
         }
 
         return res.redirect('back');

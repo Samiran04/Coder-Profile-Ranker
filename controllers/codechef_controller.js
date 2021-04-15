@@ -1,5 +1,8 @@
 const User = require('../models/user');
 const CodeChef = require('../models/codechef');
+const Rank = require('../models/rank');
+
+const calculator = require('../rankCalculator/rankCalculator');
 
 module.exports.enterData = async function(req, res){
 
@@ -8,9 +11,11 @@ module.exports.enterData = async function(req, res){
 
         let temp = await CodeChef.findOne({user: req.user._id});
 
+        let codechef;
+
         if(!temp)
         {
-            let codechef = await CodeChef.create({
+                codechef = await CodeChef.create({
                 Id: req.body.Id,
                 rating: req.body.rating,
                 user: user._id
@@ -56,6 +61,29 @@ module.exports.enterData = async function(req, res){
             user.save();
         }
 
+        let rank;
+
+        if(!user.rank)
+        {
+            rank = await Rank.create({
+                user: user._id,
+                gfg: 0,
+                codeforces: 0,
+                codechef: codechef.rating
+            });
+
+            user.rank = rank._id;
+            user.save();
+        }else{
+            rank = await Rank.findById(user.rank);
+            rank.codechef = codechef.rating ;
+        }
+
+        let total = await calculator.calculateRating(rank);
+
+        rank.rating = total;
+        rank.save();
+
         return res.redirect('back');
     }
     catch(err){
@@ -73,6 +101,18 @@ module.exports.removeData = async function(req, res){
             let user = await User.findByIdAndUpdate(req.user._id, {
                 $unset: {codechef: codechef._id}
             });
+
+            let rank = await Rank.findOne({user: req.user._id});
+
+            rank.codechef = 0;
+
+            let total = await calculator.calculateRating(rank);
+
+            rank.rating = total;
+
+            console.log(rank);
+
+            rank.save();
 
         }
 
