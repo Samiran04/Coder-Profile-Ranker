@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     gfg: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Gfg'
+    },
+    rank :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Rank'
     }
 }, {timestamps: true});
 
