@@ -9,6 +9,9 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const expressLayouts = require('express-ejs-layouts');
 
+const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
+
 app.use(express.urlencoded());
 
 app.set('view engine', 'ejs');

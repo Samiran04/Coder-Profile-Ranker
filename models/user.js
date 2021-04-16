@@ -13,9 +13,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    rank :{
-        type: Number
-    },
     points: {
         type: Number
     },

@@ -6,10 +6,9 @@ const calculator = require('../rankCalculator/rankCalculator');
 module.exports.enterData = async function(req, res){
     try{
         let user = await User.findById(req.user._id);
-        let temp = await Gfg.findOne({user: req.user._id});
-        let gfg;
+        let gfg = await Gfg.findOne({user: req.user._id});
 
-        if(!temp)
+        if(!gfg)
         {
             gfg = await Gfg.create({
                 Id: req.body.Id,
@@ -18,8 +17,9 @@ module.exports.enterData = async function(req, res){
             });
 
             user.gfg = gfg._id;
-            user.save();
         }
+
+        console.log(gfg);
 
         let rating = 0;
 
@@ -64,16 +64,19 @@ module.exports.enterData = async function(req, res){
             });
 
             user.rank = rank._id;
-            user.save();
         }else{
             rank = await Rank.findById(user.rank);
             rank.gfg = rating;
         }
 
+        //console.log(rank);
+
         let total = await calculator.calculateRating(rank);
 
         rank.rating = total;
         rank.save();
+        user.save();
+        gfg.save();
 
         return res.redirect('back');
     }catch(err){
@@ -101,9 +104,9 @@ module.exports.removeData = async function(req, res){
 
             rank.rating = total;
 
-            rank.save();
-
         }
+
+        rank.save();
 
         return res.redirect('back');
     }

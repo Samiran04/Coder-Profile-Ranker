@@ -9,11 +9,9 @@ module.exports.enterData = async function(req, res){
     try{
         let user = await User.findById(req.user._id);
 
-        let temp = await CodeChef.findOne({user: req.user._id});
+        let codechef = await CodeChef.findOne({user: req.user._id});
 
-        let codechef;
-
-        if(!temp)
+        if(!codechef)
         {
                 codechef = await CodeChef.create({
                 Id: req.body.Id,
@@ -54,11 +52,7 @@ module.exports.enterData = async function(req, res){
 
             codechef.title = title;
 
-            codechef.save();
-
             user.codechef = codechef._id;
-
-            user.save();
         }
 
         let rank;
@@ -73,16 +67,19 @@ module.exports.enterData = async function(req, res){
             });
 
             user.rank = rank._id;
-            user.save();
         }else{
             rank = await Rank.findById(user.rank);
-            rank.codechef = codechef.rating ;
+            rank.codechef = codechef.rating;
         }
 
         let total = await calculator.calculateRating(rank);
 
         rank.rating = total;
         rank.save();
+        user.save();
+        codechef.save();
+
+        console.log(rank);
 
         return res.redirect('back');
     }
@@ -103,7 +100,7 @@ module.exports.removeData = async function(req, res){
             });
 
             let rank = await Rank.findOne({user: req.user._id});
-
+    
             rank.codechef = 0;
 
             let total = await calculator.calculateRating(rank);
@@ -112,9 +109,9 @@ module.exports.removeData = async function(req, res){
 
             console.log(rank);
 
-            rank.save();
-
         }
+
+        rank.save();
 
         return res.redirect('back');
     }catch(err){

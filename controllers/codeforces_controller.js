@@ -8,11 +8,9 @@ module.exports.enterData = async function(req, res){
     try{
         let user = await User.findById(req.user._id);
 
-        let temp = await CodeForces.findOne({user: req.user._id});
+        let codeforces = await CodeForces.findOne({user: req.user._id});
 
-        let codeforces;
-
-        if(!temp)
+        if(!codeforces)
         {
                 codeforces = await CodeForces.create({
                 Id: req.body.Id,
@@ -59,11 +57,7 @@ module.exports.enterData = async function(req, res){
 
             codeforces.title = title;
 
-            codeforces.save();
-
             user.codeforces = codeforces._id;
-
-            user.save();
         }
 
         let rank;
@@ -78,8 +72,8 @@ module.exports.enterData = async function(req, res){
             });
 
             user.rank = rank._id;
-            user.save();
         }else{
+
             rank = await Rank.findById(user.rank);
             rank.codeforces = codeforces.rating ;
         }
@@ -88,6 +82,8 @@ module.exports.enterData = async function(req, res){
 
         rank.rating = total;
         rank.save();
+        user.save();
+        codeforces.save();
 
         return res.redirect('back');
     }
@@ -115,9 +111,9 @@ module.exports.removeData = async function(req, res){
             rank.rating = total;
 
             console.log(rank);
-
-            rank.save();
         }
+
+        rank.save();
 
         return res.redirect('back');
     }catch(err){
