@@ -1,1 +1,12 @@
-<h1>HOME</h1>
+<div>
+    <h2>Top Performers</h2>
+    <div>
+        <ul>
+            <% for(users of rank){ %>
+                <li><p><%= users.user.name %></p>
+                    <small><%= users.rating %></small>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+</div>

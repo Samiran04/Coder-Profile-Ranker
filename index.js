@@ -8,14 +8,25 @@ const localStrategy = require('./config/passport_local_strategy');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const expressLayouts = require('express-ejs-layouts');
+const SassMiddleware = require('node-sass-middleware');
 
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
+
+app.use(SassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug: true,
+    outputStyle: 'extended',
+    prefix:'/css'
+}));
 
 app.use(express.urlencoded());
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
+app.use(express.static('./assets'));
 
 app.use(expressLayouts);
 

@@ -94,12 +94,14 @@ module.exports.removeData = async function(req, res){
     try{
         let codechef = await CodeChef.findOneAndDelete({user: req.user._id});
 
+        let rank;
+
         if(codechef){
             let user = await User.findByIdAndUpdate(req.user._id, {
                 $unset: {codechef: codechef._id}
             });
 
-            let rank = await Rank.findOne({user: req.user._id});
+            rank = await Rank.findOne({user: req.user._id});
     
             rank.codechef = 0;
 
