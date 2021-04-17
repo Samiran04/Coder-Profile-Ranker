@@ -1,7 +1,7 @@
 <header>
     <h1 id="header"><a href="/">Coders Revelations</a></h1>
     <% if(locals.user){ %>
-        <p><a href="/users/profile"><%= locals.user.name %></a></p>
+        <p><a href="/users/profile/<%= locals.user.email %>"><%= locals.user.name %></a></p>
         <p><a href="/users/destroy-session">Log Out</a></p>
     <% } else {%>
         <p><a href="/users/sign-up">Sign Up</a></p>
