@@ -5,6 +5,16 @@ const Rank = require('../models/rank');
 const calculator = require('../rankCalculator/rankCalculator');
 module.exports.enterData = async function(req, res){
     try{
+
+        console.log(req.body.my);
+
+        if(req.body.my != req.user._id)
+        {
+            return res.json(500, {
+                message: 'Invalid Access'
+            });
+        }
+
         let user = await User.findById(req.user._id);
         let gfg = await Gfg.findOne({user: req.user._id});
 
@@ -88,6 +98,16 @@ module.exports.enterData = async function(req, res){
 module.exports.removeData = async function(req, res){
 
     try{
+
+        console.log(req.query.Id);
+
+        if(req.query.Id != req.user._id)
+        {
+            return res.json(500, {
+                message: 'Invalid Access'
+            });
+        }
+
         let gfg = await Gfg.findOneAndDelete({user: req.user._id});
 
         if(gfg)
@@ -104,9 +124,9 @@ module.exports.removeData = async function(req, res){
 
             rank.rating = total;
 
-        }
+            rank.save();
 
-        rank.save();
+        }
 
         return res.redirect('back');
     }

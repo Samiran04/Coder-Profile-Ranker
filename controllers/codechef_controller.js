@@ -7,6 +7,14 @@ const calculator = require('../rankCalculator/rankCalculator');
 module.exports.enterData = async function(req, res){
 
     try{
+
+        if(req.body.my != req.user._id)
+        {
+            return res.json(500, {
+                message: 'Invalid Access'
+            });
+        }
+
         let user = await User.findById(req.user._id);
 
         let codechef = await CodeChef.findOne({user: req.user._id});
@@ -92,6 +100,14 @@ module.exports.enterData = async function(req, res){
 module.exports.removeData = async function(req, res){
 
     try{
+
+        if(req.query.Id != req.user._id)
+        {
+            return res.json(500, {
+                message: 'Invalid Access'
+            });
+        }
+
         let codechef = await CodeChef.findOneAndDelete({user: req.user._id});
 
         let rank;
