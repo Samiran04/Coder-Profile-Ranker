@@ -13,12 +13,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    points: {
-        type: Number
-    },
-    cgpa: {
-        type: Number
-    },
     codechef: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CodeChef'
@@ -34,7 +28,11 @@ const userSchema = new mongoose.Schema({
     rank :{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Rank'
-    }
+    },
+    projects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project'
+    }]
 }, {timestamps: true});
 
 const User = mongoose.model('User', userSchema);
