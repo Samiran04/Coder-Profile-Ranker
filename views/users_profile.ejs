@@ -1,5 +1,11 @@
 <div>
     <a href="/users/profile/<%= locals.profile.email %>"><p><%= locals.profile.name %></p></a>
+    
+    <% if(profile.rank){ %>
+        <h2><%= locals.profile.rank.title %></h2>
+        <p><b>Strong Zone: </b><%= locals.profile.rank.info %></p>
+    <% } %>
+
     <div>
         <h3>CodeChef</h3>
         <% if(!locals.codechef && locals.user.id == locals.profile.id){ %>

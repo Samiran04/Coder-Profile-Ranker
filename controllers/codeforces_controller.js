@@ -86,9 +86,11 @@ module.exports.enterData = async function(req, res){
             rank.codeforces = codeforces.rating ;
         }
 
-        let total = await calculator.calculateRating(rank);
+        let obj = await calculator.calculateRating(rank);
 
-        rank.rating = total;
+        rank.rating = obj.totalRating;
+        rank.title = obj.title;
+        rank.info = obj.info;
         rank.save();
         user.save();
         codeforces.save();
@@ -124,11 +126,11 @@ module.exports.removeData = async function(req, res){
 
             rank.codeforces = 0;
 
-            let total = await calculator.calculateRating(rank);
+            let obj = await calculator.calculateRating(rank);
 
-            rank.rating = total;
-
-            console.log(rank);
+            rank.rating = obj.totalRating;
+            rank.title = obj.title;
+            rank.info = obj.info;
         }
 
         rank.save();

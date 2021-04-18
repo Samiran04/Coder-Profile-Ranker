@@ -10,17 +10,21 @@ module.exports.signUp = function(req, res){
 
 module.exports.profile = async function(req, res){
 
-    let user = await User.findOne({email: req.params.email}).populate('codechef').populate('codeforces').populate('gfg');
+    let user = await User.findOne({email: req.params.email}).populate('codechef').populate('codeforces').populate('gfg').populate('rank');
 
     let codechef = user.codechef;
     let codeforces = user.codeforces;
     let gfg = user.gfg;
+    let rank = user.rank;
+
+    console.log(rank);
 
     return res.render('users_profile', {
         codechef: codechef,
         codeforces: codeforces,
         gfg: gfg,
-        profile: user
+        profile: user,
+        rank: rank
     });
 }
 

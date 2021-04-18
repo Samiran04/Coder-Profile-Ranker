@@ -16,6 +16,12 @@ const rankSchema = new mongoose.Schema({
     },
     rating: {
         type: Number
+    },
+    title: {
+        type: String
+    },
+    info: {
+        type: String
     }
 }, {timestamps: true});
 

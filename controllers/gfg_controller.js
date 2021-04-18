@@ -81,9 +81,11 @@ module.exports.enterData = async function(req, res){
 
         //console.log(rank);
 
-        let total = await calculator.calculateRating(rank);
+        let obj = await calculator.calculateRating(rank);
 
-        rank.rating = total;
+        rank.rating = obj.totalRating;
+        rank.title = obj.title;
+        rank.info = obj.info;
         rank.save();
         user.save();
         gfg.save();
@@ -120,9 +122,11 @@ module.exports.removeData = async function(req, res){
 
             rank.gfg = 0;
 
-            let total = await calculator.calculateRating(rank);
+            let obj = await calculator.calculateRating(rank);
 
-            rank.rating = total;
+            rank.rating = obj.totalRating;
+            rank.title = obj.title;
+            rank.info = obj.info;
 
             rank.save();
 

@@ -1,3 +1,4 @@
+const CodeForces = require('../models/codeforces');
 const Rank = require('../models/rank');
 
 module.exports.calculateRating = async function(rank)
@@ -41,7 +42,60 @@ module.exports.calculateRating = async function(rank)
             totalRating += 0.01 * minumum;
         }
 
-        return totalRating;
+        let title, info = "Student";
+
+        if(totalRating < 1600)
+        {
+            title = 'Bronze Tier';
+        }
+        else if(totalRating < 1800)
+        {
+            title = 'Silver Tier';
+        }
+        else if(totalRating < 2100)
+        {
+            title = 'Gold Tier';
+        }
+        else if(totalRating < 2400)
+        {
+            title = 'Platinum Tier';
+        }
+        else if(totalRating < 2600)
+        {
+            title = 'Diamond Tier'
+        }
+        else
+        {
+            title = 'God Tier';
+        }
+
+        if(newGfg >= newCodechef && newGfg >= newCodeforces)
+        {
+            if(newGfg >= 1800)
+            {
+                info = 'Data Structures And Algorithm';
+            }
+        }
+        else if(newCodeforces >= newCodechef && newCodeforces >= newGfg)
+        {
+            if(newCodeforces >= 1700)
+            {
+                info = 'Compitative Programming';
+            }
+        }
+        else if(newCodechef >= newCodeforces && newCodechef >= newGfg)
+        {
+            if(newCodechef >= 1800)
+            {
+                info = 'Compitative Programming';
+            }
+        }
+
+        return {
+            totalRating: totalRating,
+            title: title,
+            info: info
+        };
 
     }catch(err){
         console.log(err);
