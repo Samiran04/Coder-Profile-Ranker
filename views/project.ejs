@@ -1,0 +1,17 @@
+<div>
+    <% if(codes){ %>
+        <% for(code of codes){ %>
+            <a href=""><%= code.name %></a>
+        <% } %>
+    <% } %>
+
+    <% if(locals.user.id == locals.profile.id){ %>
+        <form action="/code/create" method="POST">
+            <input type="text" name="name" required placeholder="Your Project Name">
+            <input type="hidden" name="Id" value="<%= project._id %>">
+            <input type="submit" value="Create">
+        </form>
+    <% } %>
+
+    </div>
+</div>

@@ -4,9 +4,21 @@ const Project = require('../models/project');
 
 module.exports.createFile = async function(req, res){
     try{
-        let code = await new Code.create({
+
+        let code = await Code.findOne({
             user: req.user._id,
-            profile: req.body.Id,
+            project: req.body.Id,
+            name: req.body.name
+        });
+
+        if(code)
+        {
+            return res.redirect('back');
+        }
+
+        code = await Code.create({
+            user: req.user._id,
+            project: req.body.Id,
             content: 'Type Your Code...',
             name: req.body.name
         });

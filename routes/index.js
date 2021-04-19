@@ -8,5 +8,7 @@ router.use('/users/', require('./users'));
 router.use('/codechef', require('./codechef'));
 router.use('/codeforces', require('./codeforces'));
 router.use('/gfg', require('./gfg'));
+router.use('/project', require('./project'));
+router.use('/code', require('./code'));
 
 module.exports = router;

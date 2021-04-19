@@ -5,75 +5,95 @@
         <h2><%= locals.profile.rank.title %></h2>
         <p><b>Strong Zone: </b><%= locals.profile.rank.info %></p>
     <% } %>
+    <div id="outer-div-1">
+        <div id="outer-div-1-1">
+            <div>
+                <h3>CodeChef</h3>
+                <% if(!locals.codechef && locals.user.id == locals.profile.id){ %>
+                    <form action="/codechef/enter-data" method="POST">
+                        <input type="text" name="Id" placeholder="User Id" required>
+                        <input type="number" name="rating" placeholder="eg. 1200" required>
+                        <input type="hidden" name="my" value="<%= locals.profile._id %>">
+                        <input type="submit" value="Submit">
+                    </form>
+                <% } else if(locals.codechef && locals.user._id == locals.profile._id) { %>
+                    <p><b>User Id: </b><%= locals.codechef.Id %></p>
+                    <p><b>Rating: </b><%= locals.codechef.rating %></p>
+                    <h3><%= locals.codechef.title %></h3>
+                    <p><a href="/codechef/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
+                <% } else if(locals.codechef && locals.user._id != locals.profile._id){ %>
+                    <p><b>User Id: </b><%= locals.codechef.Id %></p>
+                    <p><b>Rating: </b><%= locals.codechef.rating %></p>
+                    <h3><%= locals.codechef.title %></h3>
+                    <% if(locals.user.id == locals.profile.id){ %>
+                        <p><a href="/codechef/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
+                    <% } %>
+                <% } %>
+            </div>
 
-    <div>
-        <h3>CodeChef</h3>
-        <% if(!locals.codechef && locals.user.id == locals.profile.id){ %>
-            <form action="/codechef/enter-data" method="POST">
-                <input type="text" name="Id" placeholder="User Id" required>
-                <input type="number" name="rating" placeholder="eg. 1200" required>
-                <input type="hidden" name="my" value="<%= locals.profile._id %>">
-                <input type="submit" value="Submit">
-            </form>
-        <% } else if(locals.codechef && locals.user._id == locals.profile._id) { %>
-            <p><b>User Id: </b><%= locals.codechef.Id %></p>
-            <p><b>Rating: </b><%= locals.codechef.rating %></p>
-            <h3><%= locals.codechef.title %></h3>
-            <p><a href="/codechef/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
-        <% } else if(locals.codechef && locals.user._id != locals.profile._id){ %>
-            <p><b>User Id: </b><%= locals.codechef.Id %></p>
-            <p><b>Rating: </b><%= locals.codechef.rating %></p>
-            <h3><%= locals.codechef.title %></h3>
+            <div>
+                <h3>CodeForces</h3>
+                <% if(!locals.codeforces && locals.user.id == locals.profile.id){ %>
+                    <form action="/codeforces/enter-data" method="POST">
+                        <input type="text" name="Id" placeholder="User Id" required>
+                        <input type="number" name="rating" placeholder="eg. 1200" required>
+                        <input type="hidden" name="my" value="<%= locals.profile._id %>">
+                        <input type="submit" value="Submit">
+                    </form>
+                <% } else if(locals.codeforces && locals.user.id == locals.profile.id){ %>
+                    <p><b>User Id: </b><%= locals.codeforces.Id %></p>
+                    <p><b>Rating: </b><%= locals.codeforces.rating %></p>
+                    <h3><%= locals.codeforces.title %></h3>
+                    <p><a href="/codeforces/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
+                <% } else if(locals.codeforces && locals.user.id != locals.profile.id) {%>
+                    <p><b>User Id: </b><%= locals.codeforces.Id %></p>
+                    <p><b>Rating: </b><%= locals.codeforces.rating %></p>
+                    <h3><%= locals.codeforces.title %></h3>
+                    <% if(locals.user.id == locals.profile.id){ %>
+                        <p><a href="/codeforces/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
+                    <% } %>
+                <% } %>
+            </div>
+
+            <div>
+                <h3>Geeks For Geeks</h3>
+                <% if(!locals.gfg && locals.user.id == locals.profile.id){ %>
+                    <form action="/gfg/enter-data" method="POST">
+                        <input type="text" name="Id" placeholder="User Id" required>
+                        <input type="number" name="ranking" placeholder="eg. 100" required>
+                        <input type="hidden" name="my" value="<%= locals.profile._id %>">
+                        <input type="submit" value="Submit">
+                    </form>
+                <% } else if(locals.gfg && locals.user.id == locals.profile.id) { %>
+                    <p><b>User Id: </b><%= locals.gfg.Id %></p>
+                    <p><b>Ranking: <%= locals.gfg.ranking %></b></p>
+                    <p><a href="/gfg/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
+                <% } else if(locals.gfg && locals.user.id != locals.profile.id) {%>
+                    <p><b>User Id: </b><%= locals.gfg.Id %></p>
+                    <p><b>Ranking: <%= locals.gfg.ranking %></b></p>
+                    <% if(locals.user.id == locals.profile.id){ %>
+                        <p><a href="/gfg/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
+                    <% } %>
+                <% } %>
+
+            </div>
+        </div>
+        <div id="outer-div-1-2">
+            <h2>Projects</h2>
             <% if(locals.user.id == locals.profile.id){ %>
-                <p><a href="/codechef/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
+                <form action="/project/create %>" method="POST">
+                    <input type="text" name="name" required placeholder="Your Project Name">
+                    <input type="submit" value="Create">
+                </form>
             <% } %>
-        <% } %>
+            <ul>
+                <% if(projects){ %>
+                    <% for(project of projects){ %>
+                        <li><a href="/users/<%= profile.email %>/<%= project.name %>"><%= project.name %></a></li>
+                    <% } %>
+                <% } %>
+            </ul>
+        </div>
     </div>
 
-    <div>
-        <h3>CodeForces</h3>
-        <% if(!locals.codeforces && locals.user.id == locals.profile.id){ %>
-            <form action="/codeforces/enter-data" method="POST">
-                <input type="text" name="Id" placeholder="User Id" required>
-                <input type="number" name="rating" placeholder="eg. 1200" required>
-                <input type="hidden" name="my" value="<%= locals.profile._id %>">
-                <input type="submit" value="Submit">
-            </form>
-        <% } else if(locals.codeforces && locals.user.id == locals.profile.id){ %>
-            <p><b>User Id: </b><%= locals.codeforces.Id %></p>
-            <p><b>Rating: </b><%= locals.codeforces.rating %></p>
-            <h3><%= locals.codeforces.title %></h3>
-            <p><a href="/codeforces/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
-        <% } else if(locals.codeforces && locals.user.id != locals.profile.id) {%>
-            <p><b>User Id: </b><%= locals.codeforces.Id %></p>
-            <p><b>Rating: </b><%= locals.codeforces.rating %></p>
-            <h3><%= locals.codeforces.title %></h3>
-            <% if(locals.user.id == locals.profile.id){ %>
-                <p><a href="/codeforces/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
-            <% } %>
-        <% } %>
-    </div>
-
-    <div>
-        <h3>Geeks For Geeks</h3>
-        <% if(!locals.gfg && locals.user.id == locals.profile.id){ %>
-            <form action="/gfg/enter-data" method="POST">
-                <input type="text" name="Id" placeholder="User Id" required>
-                <input type="number" name="ranking" placeholder="eg. 100" required>
-                <input type="hidden" name="my" value="<%= locals.profile._id %>">
-                <input type="submit" value="Submit">
-            </form>
-        <% } else if(locals.gfg && locals.user.id == locals.profile.id) { %>
-            <p><b>User Id: </b><%= locals.gfg.Id %></p>
-            <p><b>Ranking: <%= locals.gfg.ranking %></b></p>
-            <p><a href="/gfg/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
-        <% } else if(locals.gfg && locals.user.id != locals.profile.id) {%>
-            <p><b>User Id: </b><%= locals.gfg.Id %></p>
-            <p><b>Ranking: <%= locals.gfg.ranking %></b></p>
-            <% if(locals.user.id == locals.profile.id){ %>
-                <p><a href="/gfg/remove-data/?Id=<%= locals.profile._id %>">Remove</a></p>
-            <% } %>
-        <% } %>
-
-    </div>
 </div>

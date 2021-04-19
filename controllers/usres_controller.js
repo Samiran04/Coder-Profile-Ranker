@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Project = require('../models/project');
 
 module.exports.signIn = function(req, res){
     return res.render('users_signIn');
@@ -10,25 +11,36 @@ module.exports.signUp = function(req, res){
 
 module.exports.profile = async function(req, res){
 
+    console.log('**********HERE');
+
     let user = await User.findOne({email: req.params.email}).populate('codechef').populate('codeforces').populate('gfg').populate('rank');
 
     let codechef = user.codechef;
     let codeforces = user.codeforces;
     let gfg = user.gfg;
     let rank = user.rank;
+    let projects;
 
-    console.log(rank);
+    if(user.projects.length > 0)
+    {
+        let temp = await User.findOne({email: req.params.email}).populate('projects');
+        projects = temp.projects;
+    }
+
+    console.log(projects);
 
     return res.render('users_profile', {
         codechef: codechef,
         codeforces: codeforces,
         gfg: gfg,
         profile: user,
-        rank: rank
+        rank: rank,
+        projects: projects
     });
 }
 
 module.exports.destroySession = function(req, res){
+
     req.logout();
 
     return res.redirect('/');
