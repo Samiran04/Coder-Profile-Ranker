@@ -1,7 +1,7 @@
 <div>
     <% if(codes){ %>
         <% for(code of codes){ %>
-            <a href=""><%= code.name %></a>
+            <a href="/users/<%= profile.email %>/<%= project.name %>/<%= code.name %>"><%= code.name %></a>
         <% } %>
     <% } %>
 
