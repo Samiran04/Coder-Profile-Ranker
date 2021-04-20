@@ -1,4 +1,5 @@
 <div>
+    <p><b>Commits: </b><%= project.commits %></p>
     <% if(codes){ %>
         <% for(code of codes){ %>
             <a href="/users/<%= profile.email %>/<%= project.name %>/<%= code.name %>"><%= code.name %></a>

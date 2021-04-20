@@ -14,7 +14,8 @@ module.exports.createProject = async function(req, res){
         project = await Project.create({
             user: req.user._id,
             name: req.body.name,
-            codes: []
+            codes: [],
+            commits: 0
         });
 
         await User.findByIdAndUpdate(req.user._id, {

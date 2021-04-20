@@ -24,7 +24,9 @@ module.exports.profile = async function(req, res){
     if(user.projects.length > 0)
     {
         let temp = await User.findOne({email: req.params.email}).populate('projects');
-        projects = temp.projects;
+        projects = temp.projects.sort((x, y) => {
+            return y.commits - x.commits;
+        });
     }
 
     console.log(projects);
