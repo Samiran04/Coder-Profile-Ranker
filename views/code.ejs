@@ -1,6 +1,10 @@
 <div>
     <form action="/code/save/?Id=<%= project._id %>&contentId=<%= code._id %>" method="POST">
-        <textarea name="content"  cols="30" rows="10"><%= code.content %></textarea>
+        <textarea name="content"  cols="80" rows="30"><%= code.content %></textarea>
         <input type="submit" value="Save">
     </form>
+
+    <% if(locals.user.id == project.user){ %>
+        <a href="/code/destroy/?project=<%= project._id %>&code=<%= code._id %>">X</a>
+    <% } %>
 </div>

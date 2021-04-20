@@ -89,7 +89,11 @@
             <ul>
                 <% if(projects){ %>
                     <% for(project of projects){ %>
-                        <li><a href="/users/<%= profile.email %>/<%= project.name %>"><%= project.name %></a></li>
+                        <li><a href="/users/<%= profile.email %>/<%= project.name %>"><%= project.name %></a>
+                            <% if(locals.user.id == locals.profile.id){ %>
+                                <p><a href="/project/destroy/?project=<%= project._id %>">X</a></p>
+                            <% } %>
+                        </li>
                     <% } %>
                 <% } %>
             </ul>

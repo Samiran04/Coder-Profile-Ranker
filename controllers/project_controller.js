@@ -1,5 +1,6 @@
 const Project = require('../models/project');
 const User = require('../models/user');
+const Code = require('../models/code');
 
 module.exports.createProject = async function(req, res){
     try{
@@ -59,6 +60,29 @@ module.exports.displayProject = async function(req, res){
         console.log(err);
         return res.json(500, {
             message: 'Error In Display'
+        });
+    }
+}
+
+module.exports.destroyProject = async function(req, res){
+    try{
+
+        console.log('**********Destroy Project');
+
+        await Code.deleteMany({project: req.query.project});
+
+        await User.findByIdAndUpdate(req.user._id, {
+            $pull: {project: req.query.project}
+        });
+
+        await Project.findByIdAndDelete(req.query.project);
+
+        return res.redirect('/');
+
+    }catch(err){
+        console.log(err);
+        return res.json(500, {
+            message: 'Error in code'
         });
     }
 }

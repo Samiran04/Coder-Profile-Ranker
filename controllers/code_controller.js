@@ -95,3 +95,22 @@ module.exports.openCode = async function(req, res){
         });
     }
 }
+
+module.exports.detroyCode = async function(req, res){
+
+    try{
+        await Project.findByIdAndUpdate(req.query.project, {
+            $pull: {codes: req.query.code}
+        });
+    
+        await Code.findByIdAndRemove(req.query.code);
+    
+        return res.redirect('/');
+    }
+    catch(err){
+        console.log(err);
+        return res.json(500, {
+            message: 'Error in code'
+        });
+    }
+}
